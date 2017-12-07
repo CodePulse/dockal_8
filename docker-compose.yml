@@ -1,0 +1,47 @@
+version: '3.1'
+
+services:
+
+# PHP/Apache with mysql-client
+  app:
+    container_name: obtain_it_app
+    image: codepulse/php-7.2.0-apache-mysql
+    user: www-data:www-data
+    volumes:
+      - .:/var/www:cached
+      - ./Docker/etc/apache2/000-default.conf:/etc/apache2/sites-available/000-default.conf:cached
+    working_dir: /var/www/docroot
+    depends_on:
+      - db
+    ports:
+      - "${APP_PORT}:443"
+    links:
+      - db:${APP_URL}
+      - composer
+    restart: always
+
+# Database service
+  db:
+    image: percona:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3309:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+
+# Allow composer to be used in app container
+  composer:
+    image: composer:latest
+    command: install --ignore-platform-reqs --no-scripts
+    working_dir: /var/www/docroot
+    volumes:
+      - ./.:/var/www/docroot
+
+# Volumes to make sure I do not lose any data
+volumes:
+  db_data:

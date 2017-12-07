@@ -1,0 +1,94 @@
+{
+  "name": "codepulse/dockal_8",
+  "description": "Quick setup of a Drupal 8 site and Docker",
+  "type": "project",
+  "license": "GNU GPLv3",
+  "minimum-stability": "dev",
+  "config": {
+    "platorm": {
+      "php": "7.1.12"
+    }
+  },
+  "authors": [
+    {
+      "name": "Ben Lamptey",
+      "email": "ben@codepulse.co.uk"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    }
+  ],
+  "require": {
+    "composer/installers": "^1.2",
+    "drupal-composer/drupal-scaffold": "^2.2",
+    "cweagans/composer-patches": "~1.0",
+    "drupal/core": "^8.4",
+    "drush/drush": "~9",
+    "drupal/console": "~1.0",
+    "vlucas/phpdotenv": "^2.4",
+    "drupal/admin_toolbar": "^8.1",
+    "drupal/paragraphs": "^8.1",
+    "drupal/address": "^8.1@beta",
+    "drupal/field_group": "^8",
+    "drupal/ctools": "^8.3.0",
+    "drupal/views_load_more": "1.x-dev",
+    "drupal/google_analytics": "^8.2",
+    "drupal/redirect": "^8.1@dev",
+    "drupal/search_api": "^1.0",
+    "drupal/better_exposed_filters": "^3.0@alpha",
+    "drupal/simple_fb_connect": "^3.1",
+    "drupal/search_api_solr": "^1.2",
+    "drupal/facets": "^1.0@beta"
+  },
+  "require-dev": {
+  },
+  "prefer-stable": true,
+  "scripts": {
+    "post-root-package-install": [
+    ],
+    "post-install-cmd": [
+      "echo \"post-install-cmd\"",
+      "php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+      "php -r \"file_exists('docroot/sites/default/settings.local.php') || copy('default.settings.local.php', 'docroot/sites/default/settings.local.php');\""
+    ]
+  },
+  "extra": {
+    "installer-paths": {
+      "docroot/core": [
+        "type:drupal-core"
+      ],
+      "docroot/modules/contrib/{$name}": [
+        "type:drupal-module"
+      ],
+      "docroot/profiles/contrib/{$name}": [
+        "type:drupal-profile"
+      ],
+      "docroot/themes/contrib/{$name}": [
+        "type:drupal-theme"
+      ],
+      "drush/contrib/{$name}": [
+        "type:drupal-drush"
+      ],
+      "docroot/modules/custom/{$name}": [
+        "type:drupal-custom-module"
+      ],
+      "docroot/profiles/custom/{$name}": [
+        "type:drupal-custom-profile"
+      ],
+      "docroot/themes/custom/{$name}": [
+        "type:drupal-custom-theme"
+      ],
+      "docroot/libraries/{$name}": [
+        "type:drupal-library",
+        "type:bower-asset",
+        "type:npm-asset",
+        "type:bower-asset",
+        "type:npm-asset"
+      ]
+    },
+    "patches": { }
+  }
+}
