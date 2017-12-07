@@ -4,7 +4,7 @@ services:
 
 # PHP/Apache with mysql-client
   app:
-    container_name: obtain_it_app
+    container_name: ${APP_PREFIX}_app
     image: codepulse/php-7.2.0-apache-mysql
     user: www-data:www-data
     volumes:
