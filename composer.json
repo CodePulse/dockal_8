@@ -47,10 +47,11 @@
   "scripts": {
     "post-root-package-install": [
     ],
-    "post-install-cmd": [
+    "post-create-project-cmd": [
+      "./vendor/bin/drush eval \"echo Drupal\\Component\\Utility\\Crypt::randomBytesBase64(55)\" > salt.txt",
       "php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
       "php -r \"file_exists('docroot/sites/default/settings.local.php') || copy('default.settings.local.php', 'docroot/sites/default/settings.local.php');\"",
-      "echo Site setup is complete! Begin!"
+      "echo Site setup is complete! Begin working on the project!"
     ]
   },
   "extra": {
