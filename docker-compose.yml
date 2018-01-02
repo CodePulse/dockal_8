@@ -9,7 +9,9 @@ services:
     volumes:
       - .:/var/www:cached
       - ./Docker/etc/apache2/000-default.conf:/etc/apache2/sites-available/000-default.conf:cached
+      - ./Docker/etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini:cached
     working_dir: /var/www/docroot
+    env_file: .env
     depends_on:
       - db
     ports:
@@ -32,14 +34,6 @@ services:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
-
-# Allow composer to be used in app container
-  composer:
-    image: composer:latest
-    command: install --ignore-platform-reqs --no-scripts
-    working_dir: /var/www/docroot
-    volumes:
-      - ./.:/var/www/docroot
 
 # Volumes to make sure I do not lose any data
 volumes:
